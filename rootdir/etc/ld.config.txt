@@ -27,6 +27,10 @@ dir.unrestricted = /data/nativetest64/unrestricted
 # necessary) the unrestricted subdirs above. Then clean this up.
 dir.unrestricted = /data/local/tmp
 
+# NEOS
+dir.unrestricted = /data/data/com.termux/files
+dir.unrestricted = /data/openpilot
+
 dir.postinstall = /postinstall
 
 # Fallback entry to provide APEX namespace lookups for binaries anywhere else.
