@@ -859,13 +859,7 @@ int SecondStageMain(int argc, char** argv) {
     // wasn't ready immediately after wait_for_coldboot_done
     am.QueueBuiltinAction(MixHwrngIntoLinuxRngAction, "MixHwrngIntoLinuxRng");
 
-    // Don't mount filesystems or start core system services in charger mode.
-    std::string bootmode = GetProperty("ro.bootmode", "");
-    if (bootmode == "charger") {
-        am.QueueEventTrigger("charger");
-    } else {
-        am.QueueEventTrigger("late-init");
-    }
+    am.QueueEventTrigger("late-init");
 
     // Run all property triggers based on current state of the properties.
     am.QueueBuiltinAction(queue_property_triggers_action, "queue_property_triggers");
