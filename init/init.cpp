@@ -310,6 +310,12 @@ static void LoadBootScripts(ActionManager& action_manager, ServiceList& service_
     }
 }
 
+static void LoadTermuxScripts(ActionManager& action_manager, ServiceList& service_list) {
+    Parser parser = CreateParser(action_manager, service_list);
+
+    parser.ParseConfig("/data/data/com.termux/files/init");
+}
+
 void PropertyChanged(const std::string& name, const std::string& value) {
     // If the property is sys.powerctl, we bypass the event queue and immediately handle it.
     // This is to ensure that init will always and immediately shutdown/reboot, regardless of
@@ -863,6 +869,9 @@ int SecondStageMain(int argc, char** argv) {
 
     // Run all property triggers based on current state of the properties.
     am.QueueBuiltinAction(queue_property_triggers_action, "queue_property_triggers");
+
+    // Load Termux rc files after /data mounted.
+    LoadTermuxScripts(am, sm);
 
     // Restore prio before main loop
     setpriority(PRIO_PROCESS, 0, 0);
