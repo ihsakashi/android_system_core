@@ -159,6 +159,9 @@ cc_library_static {
             ],
         },
     },
+    cflags: [
+        "-DAOSPNE_NO_ENCRYPTION",
+    ]
     export_include_dirs: ["include_fstab"],
     header_libs: [
         "libbase_headers",

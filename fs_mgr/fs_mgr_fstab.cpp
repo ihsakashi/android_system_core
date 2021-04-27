@@ -182,6 +182,15 @@ void ParseFsMgrFlags(const std::string& flags, FstabEntry* entry) {
 
 #undef CheckFlag
 
+#ifdef AOSPNE_NO_ENCRYPTION
+        if (StartsWith(flag, "encryptable=") || StartsWith(flag, "forceencrypt=")
+                || StartsWith(flag, "forcefdeorfbe=") || StartsWith(flag, "keydirectory=")
+                || StartsWith(flag, "metadata_encryption=")) {
+            LWARNING << "Warning: AOSPNE hack - skipping: " << flag;
+            continue;
+        }
+#endif
+
         // Then handle flags that take an argument.
         if (StartsWith(flag, "encryptable=")) {
             // The encryptable flag is followed by an = and the  location of the keys.
