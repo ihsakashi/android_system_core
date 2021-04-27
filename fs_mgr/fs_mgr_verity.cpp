@@ -378,6 +378,9 @@ static void update_verity_table_blk_device(const std::string& blk_device, char**
 // mount. The 'wait_for_verity_dev' parameter makes this function wait for the
 // verity device to get created before return
 int fs_mgr_setup_verity(FstabEntry* entry, bool wait_for_verity_dev) {
+#ifdef AOSPNE_HACK_VERITY
+    return FS_MGR_SETUP_VERITY_SUCCESS;
+#else
     int retval = FS_MGR_SETUP_VERITY_FAIL;
     int fd = -1;
     std::string verity_blk_name;
@@ -545,6 +548,7 @@ out:
     free(params.table);
 
     return retval;
+#endif
 }
 
 bool fs_mgr_teardown_verity(FstabEntry* entry) {
